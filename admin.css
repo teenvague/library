@@ -1,0 +1,72 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: #fff; color: #010000; }
+body { font-family: Arial, Helvetica, sans-serif; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+.admin-head {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  border-bottom: 2px solid #010000;
+  font-size: 14px;
+}
+.admin-head a { color: inherit; text-decoration: none; }
+.admin-shell { min-height: calc(100vh - 58px); display: grid; grid-template-columns: 360px minmax(0, 1fr); }
+.sidebar { border-right: 2px solid #010000; }
+.github-box { padding: 16px; border-bottom: 2px solid #010000; }
+.github-box h1 { margin: 0 0 12px; font-size: 14px; }
+label { display: block; margin-bottom: 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+input, textarea, select {
+  width: 100%;
+  display: block;
+  margin-top: 6px;
+  border: 1px solid #010000;
+  border-radius: 0;
+  background: #fff;
+  padding: 9px;
+}
+input, textarea { font-family: Times, "Times New Roman", serif; font-size: 18px; }
+textarea { resize: vertical; letter-spacing: .01em; }
+select { font-family: Times, "Times New Roman", serif; font-size: 18px; }
+button { border: 1px solid #010000; border-radius: 0; background: #fff; padding: 9px 11px; cursor: pointer; }
+button.primary { background: #010000; color: #fff; }
+.github-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.status { margin: 10px 0 0; font-size: 11px; line-height: 1.35; }
+.status.ok { font-weight: 700; }
+.status.error { font-weight: 700; }
+.new-book { width: 100%; border: 0; border-bottom: 1px solid #aaa; text-align: left; padding: 13px 16px; font-weight: 700; }
+.book-list button {
+  width: 100%; border: 0; border-bottom: 1px solid #ddd; text-align: left; display: grid;
+  grid-template-columns: 16px 1fr; gap: 9px; padding: 12px 16px; background: #fff;
+}
+.book-list button.active { background: #f2f2f2; }
+.book-dot { width: 14px; height: 14px; margin-top: 1px; border: 1px solid rgba(0,0,0,.2); }
+.book-meta { font-size: 12px; line-height: 1.15; font-weight: 700; }
+.book-meta small { display: block; margin-top: 3px; font-size: 11px; font-weight: 400; }
+.editor-pane { padding: 28px; }
+#bookForm { max-width: 960px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+fieldset { border: 0; padding: 0; margin: 22px 0; }
+legend { font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+.color-line { display: flex; gap: 8px; max-width: 430px; }
+.color-line input { margin: 0; }
+.swatches { display: grid; grid-template-columns: repeat(10, 32px); gap: 5px; margin-top: 10px; }
+.swatch { width: 32px; height: 32px; padding: 0; border: 1px solid rgba(0,0,0,.2); }
+.swatch.selected { border: 3px solid #010000; }
+.form-actions { display: flex; gap: 8px; }
+.note { max-width: 760px; font-size: 12px; line-height: 1.4; margin-top: 24px; }
+.note code { font-family: monospace; }
+
+button:focus, button:focus-visible, input:focus, input:focus-visible, textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 820px) {
+  .admin-shell { grid-template-columns: 1fr; }
+  .sidebar { border-right: 0; border-bottom: 2px solid #010000; }
+  .two-col, .three-col { grid-template-columns: 1fr; }
+}

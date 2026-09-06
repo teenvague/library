@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reading Log Admin</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <header class="admin-head">
+    <strong>Reading Log Admin</strong>
+    <a href="index.html">View site ↗</a>
+  </header>
+
+  <main class="admin-shell">
+    <aside class="sidebar">
+      <section class="github-box">
+        <h1>GitHub</h1>
+        <label>Owner<input id="repoOwner" autocomplete="off" placeholder="your-github-username"></label>
+        <label>Repository<input id="repoName" autocomplete="off" placeholder="reading-log"></label>
+        <label>Branch<input id="repoBranch" autocomplete="off" value="main"></label>
+        <label>Data path<input id="repoPath" autocomplete="off" value="data/books.json"></label>
+        <label>Fine-grained token<input id="repoToken" type="password" autocomplete="off" placeholder="Not saved permanently"></label>
+        <div class="github-actions">
+          <button id="loadGithub" type="button">Load from GitHub</button>
+          <button id="publishGithub" type="button" class="primary">Publish changes</button>
+        </div>
+        <p id="githubStatus" class="status">Enter your repo details and token.</p>
+      </section>
+
+      <button id="newBook" class="new-book" type="button">+ New book</button>
+      <div id="bookList" class="book-list"></div>
+    </aside>
+
+    <section class="editor-pane">
+      <form id="bookForm">
+        <input type="hidden" name="editingId" />
+
+        <div class="two-col">
+          <label>Title<input name="title" required></label>
+          <label>Author<input name="author" required></label>
+        </div>
+
+        <div class="three-col">
+          <label>Date<input name="date" type="date" required></label>
+          <label>Status
+            <select name="status">
+              <option value="finished">Finished</option>
+              <option value="reading">Currently Reading</option>
+            </select>
+          </label>
+          <label>Rating<input name="rating" type="number" min="0" max="5" step="0.5" value="4"></label>
+        </div>
+
+        <label>Review
+          <textarea name="review" rows="12" placeholder="Separate paragraphs with a blank line."></textarea>
+        </label>
+
+        <fieldset>
+          <legend>Color</legend>
+          <div class="color-line">
+            <input name="color" id="colorValue" value="#FFFC58" required>
+            <button id="randomColor" type="button">Randomize color</button>
+          </div>
+          <div id="swatches" class="swatches"></div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="primary" type="submit">Save draft</button>
+          <button id="deleteBook" type="button">Delete</button>
+        </div>
+      </form>
+
+      <p class="note">“Save draft” updates the editor only. “Publish changes” commits <code>data/books.json</code> directly to your GitHub repo. The token is kept only for this browser tab.</p>
+    </section>
+  </main>
+
+  <script src="palettes.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

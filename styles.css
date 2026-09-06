@@ -1,0 +1,173 @@
+:root {
+  --page-pad: 29px;
+  --gap: 16px;
+  --ink: #010000;
+  --inactive: #c6c6c6;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: #fff; color: var(--ink); }
+body { font-family: Times, "Times New Roman", serif; }
+button { font: inherit; }
+
+#app { padding: 31px var(--page-pad) 88px; }
+#app.view-grid { padding: var(--gap) var(--gap) 88px; }
+
+.month-section + .month-section { margin-top: var(--gap); }
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.book-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.744 / 1;
+  padding: 0;
+  border: 0;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+.book-card .title {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+  display: block;
+  font-size: clamp(22px, 1.74vw, 30px);
+  line-height: 0.99;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.book-card .date {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: block;
+  font-size: clamp(21px, 1.67vw, 29px);
+  line-height: 0.99;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.reading-label { display: block; margin-bottom: 0.85em; }
+
+.entry-list { display: flex; flex-direction: column; gap: 0; }
+.entry-item { scroll-margin-top: 20px; }
+.entry-bar {
+  width: 100%;
+  min-height: 84px;
+  padding: 12px 15px;
+  border: 0;
+  display: grid;
+  grid-template-columns: 365px 1fr auto;
+  align-items: start;
+  column-gap: 14px;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.entry-title,
+.entry-date,
+.entry-rating {
+  font-size: clamp(25px, 1.86vw, 31px);
+  line-height: 0.98;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.entry-rating { justify-self: end; white-space: nowrap; }
+.entry-review {
+  width: min(850px, calc(100vw - 450px));
+  margin-left: 392px;
+  padding: 20px 0 30px;
+  font-size: clamp(26px, 2.15vw, 35px);
+  line-height: 0.99;
+  letter-spacing: 0.01em;
+}
+.entry-review p { margin: 0 0 28px; }
+.entry-review p:last-child { margin-bottom: 0; }
+.entry-item.collapsed .entry-review { display: none; }
+
+.month-rule {
+  border: 0;
+  border-top: 6px solid var(--ink);
+  margin: 16px 0;
+}
+
+.view-toggle {
+  position: fixed;
+  right: 29px;
+  bottom: 26px;
+  z-index: 999;
+  display: flex;
+  gap: 14px;
+  align-items: end;
+}
+.toggle-button {
+  width: 39px;
+  height: 43px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.entry-icon, .grid-icon { width: 39px; height: 41px; display: flex; }
+.entry-icon { flex-direction: column; justify-content: space-between; }
+.entry-icon i { display: block; width: 39px; height: 11px; background: var(--inactive); }
+.grid-icon { justify-content: space-between; }
+.grid-icon i { display: block; width: 10px; height: 41px; background: var(--inactive); }
+.toggle-button.active .entry-icon i,
+.toggle-button.active .grid-icon i { background: var(--ink); }
+
+.loading, .error-message {
+  font-size: 24px;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+@media (max-width: 1240px) {
+  .month-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .entry-bar { grid-template-columns: 320px 1fr auto; }
+  .entry-review { margin-left: 347px; width: min(760px, calc(100vw - 400px)); }
+}
+@media (max-width: 980px) {
+  .month-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .entry-bar { grid-template-columns: 280px 1fr auto; }
+  .entry-review { margin-left: 307px; width: calc(100vw - 365px); }
+}
+@media (max-width: 760px) {
+  :root { --page-pad: 16px; --gap: 12px; }
+  #app { padding-top: 16px; }
+  #app.view-grid { padding: var(--gap) var(--gap) 88px; }
+  .month-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .book-card .title { top: 10px; left: 10px; right: 10px; }
+  .book-card .date { left: 10px; right: 10px; bottom: 10px; }
+  .entry-bar { grid-template-columns: 1fr auto; row-gap: 8px; }
+  .entry-date { grid-column: 1 / 2; grid-row: 2; }
+  .entry-rating { grid-column: 2; grid-row: 1; }
+  .entry-review { margin-left: 0; width: 100%; padding: 16px 2px 28px; }
+  .view-toggle { right: 16px; bottom: 16px; }
+}
+@media (max-width: 520px) {
+  .month-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Per your direction: no browser-default blue outline/selected state anywhere. */
+button:focus,
+button:focus-visible,
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible,
+[tabindex]:focus,
+[tabindex]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+::selection { background: rgba(0, 0, 0, 0.14); color: inherit; }
