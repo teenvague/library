@@ -161,11 +161,16 @@ async function githubRequest(url, options = {}) {
   return response;
 }
 
+function contentsUrl({ owner, repo, path }, { ref } = {}) {
+  const base = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path.split('/').map(encodeURIComponent).join('/')}`;
+  return ref ? `${base}?ref=${encodeURIComponent(ref)}` : base;
+}
+
 async function loadFromGithub() {
-  const { owner, repo, branch, path } = githubConfig();
+  const config = githubConfig();
+  const { owner, repo, path } = config;
   if (!owner || !repo || !path) throw new Error('Owner, repository, and data path are required.');
-  const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path.split('/').map(encodeURIComponent).join('/')}?ref=${encodeURIComponent(branch)}`;
-  const response = await githubRequest(url);
+  const response = await githubRequest(contentsUrl(config, { ref: config.branch }));
   const payload = await response.json();
   if (payload.type !== 'file' || !payload.content) throw new Error('The configured data path is not a file.');
   const parsed = JSON.parse(decodeBase64Utf8(payload.content));
@@ -176,20 +181,34 @@ async function loadFromGithub() {
   setStatus(`Loaded ${books.length} books from GitHub.`, 'ok');
 }
 
+// Fetches only the file's current sha (never touches the in-memory `books` draft).
+// publishToGithub needs this for GitHub's optimistic-concurrency check, but must
+// not clobber unsaved edits just because the page never called loadFromGithub().
+async function ensureSha(config) {
+  if (currentSha) return;
+  try {
+    const response = await githubRequest(contentsUrl(config, { ref: config.branch }));
+    const payload = await response.json();
+    currentSha = payload.sha || null;
+  } catch (error) {
+    // File doesn't exist yet on GitHub — publishing will create it, no sha needed.
+    if (!/not found/i.test(error.message)) throw error;
+  }
+}
+
 async function publishToGithub() {
-  const { owner, repo, branch, path } = githubConfig();
+  const config = githubConfig();
+  const { owner, repo, branch, path } = config;
   if (!owner || !repo || !path) throw new Error('Owner, repository, and data path are required.');
 
-  if (!currentSha) {
-    await loadFromGithub();
-  }
+  await ensureSha(config);
 
-  const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path.split('/').map(encodeURIComponent).join('/')}`;
+  const url = contentsUrl(config);
   const body = {
     message: `Update library (${new Date().toISOString().slice(0,10)})`,
     content: encodeBase64Utf8(`${JSON.stringify(sortBooks(books), null, 2)}\n`),
     branch,
-    sha: currentSha
+    ...(currentSha ? { sha: currentSha } : {})
   };
   const response = await githubRequest(url, {
     method: 'PUT',
