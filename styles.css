@@ -51,8 +51,6 @@ button { font: inherit; }
   font-weight: 700;
   letter-spacing: -0.04em;
 }
-.reading-label { display: block; margin-bottom: 0.85em; }
-
 .entry-list { display: flex; flex-direction: column; gap: 0; }
 .entry-item { scroll-margin-top: 20px; }
 .entry-bar {

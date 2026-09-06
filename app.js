@@ -27,11 +27,6 @@ function grouped(items) {
   return [...map.entries()];
 }
 
-function readingDateLabel(dateString) {
-  const d = new Date(`${dateString}T12:00:00`);
-  return `${d.toLocaleString('en-US', { month: 'long' })} ${d.getFullYear()}`;
-}
-
 function dateLabel(dateString) {
   const d = new Date(`${dateString}T12:00:00`);
   const month = d.toLocaleString('en-US', { month: 'long' });
@@ -57,8 +52,8 @@ function renderGrid() {
       <div class="month-grid">
         ${entries.map(book => `
           <button class="book-card" data-id="${safe(book.id)}" style="background:${backgroundColor(book)}">
-            <span class="title">${isReading(book) ? '<span class="reading-label">Currently Reading</span>' : ''}${safe(book.title)}<br>${safe(book.author)}</span>
-            <span class="date">${isReading(book) ? safe(readingDateLabel(book.date)) : dateLabel(book.date)}</span>
+            <span class="title">${safe(book.title)}<br>${safe(book.author)}</span>
+            <span class="date">${isReading(book) ? 'Currently Reading' : dateLabel(book.date)}</span>
           </button>
         `).join('')}
       </div>
@@ -82,8 +77,8 @@ function renderEntry() {
     ${entries.map(book => `
       <article class="entry-item ${collapsed.has(book.id) ? 'collapsed' : ''}" id="${safe(book.id)}">
         <button class="entry-bar" data-id="${safe(book.id)}" style="background:${backgroundColor(book)}" aria-expanded="${!collapsed.has(book.id)}">
-          <span class="entry-title">${isReading(book) ? '<span class="reading-label">Currently Reading</span>' : ''}${safe(book.title)}<br>${safe(book.author)}</span>
-          <span class="entry-date">${isReading(book) ? safe(readingDateLabel(book.date)) : dateLabel(book.date)}</span>
+          <span class="entry-title">${safe(book.title)}<br>${safe(book.author)}</span>
+          <span class="entry-date">${isReading(book) ? 'Currently Reading' : dateLabel(book.date)}</span>
           <span class="entry-rating">${isReading(book) || book.rating == null ? '' : `${safe(book.rating)}/5★`}</span>
         </button>
         <div class="entry-review">${(book.review || []).map(p => `<p>${safe(p)}</p>`).join('')}</div>
