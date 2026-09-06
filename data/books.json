@@ -10,18 +10,6 @@
     "review": []
   },
   {
-    "id": "all-fours-sep",
-    "title": "All Fours",
-    "author": "Miranda July",
-    "date": "2026-09-02",
-    "rating": 4,
-    "color": "#FC3902",
-    "status": "finished",
-    "review": [
-      "The book is strongest when it makes freedom feel neither heroic nor selfish, but like an ongoing technical problem: how to construct a life capacious enough for contradiction."
-    ]
-  },
-  {
     "id": "slow-days-sep",
     "title": "Slow Days, Fast Company",
     "author": "Eve Babitz",
@@ -31,6 +19,18 @@
     "status": "finished",
     "review": [
       "Effortlessness here is a highly engineered style. Babitz makes intelligence look like appetite and criticism look like gossip, which is part of the pleasure."
+    ]
+  },
+  {
+    "id": "all-fours-sep",
+    "title": "All Fours",
+    "author": "Miranda July",
+    "date": "2026-09-02",
+    "rating": 4,
+    "color": "#FC3902",
+    "status": "finished",
+    "review": [
+      "The book is strongest when it makes freedom feel neither heroic nor selfish, but like an ongoing technical problem: how to construct a life capacious enough for contradiction."
     ]
   }
 ]
