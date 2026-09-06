@@ -1,7 +1,7 @@
 const DATA_URL = 'data/books.json';
 
 let books = [];
-let view = localStorage.getItem('reading-log-view') || 'entry';
+let view = localStorage.getItem('reading-log-view') || 'grid';
 const collapsed = new Set(JSON.parse(localStorage.getItem('reading-log-collapsed') || '[]'));
 
 const app = document.querySelector('#app');
@@ -39,9 +39,8 @@ function dateLabel(dateString) {
 }
 
 function backgroundColor(book) {
-  const hex = String(book.color || '#ffffff').trim();
-  if (isReading(book) && /^#[0-9a-f]{6}$/i.test(hex)) return `${hex}33`; // 20% alpha
-  return hex;
+  if (isReading(book)) return '#F0F0F0';
+  return String(book.color || '#ffffff').trim();
 }
 
 function saveView() {
@@ -109,8 +108,6 @@ function updateToggleState() {
 }
 
 function render() {
-  app.classList.toggle('view-grid', view === 'grid');
-  app.classList.toggle('view-entry', view === 'entry');
   if (!books.length) {
     app.innerHTML = '<div class="error-message">No books yet.</div>';
     updateToggleState();
@@ -143,7 +140,7 @@ async function loadBooks() {
     render();
   } catch (error) {
     console.error(error);
-    app.innerHTML = '<div class="error-message">Could not load the reading log.</div>';
+    app.innerHTML = '<div class="error-message">Could not load the library.</div>';
     updateToggleState();
   }
 }

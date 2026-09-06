@@ -90,7 +90,7 @@ function sortBooks(items) { return [...items].sort((a,b) => b.date.localeCompare
 function renderList(activeId = form.elements.editingId.value) {
   bookList.innerHTML = sortBooks(books).map(book => `
     <button type="button" data-id="${book.id}" class="${book.id === activeId ? 'active' : ''}">
-      <span class="book-dot" style="background:${book.status === 'reading' ? `${book.color}33` : book.color}"></span>
+      <span class="book-dot" style="background:${book.status === 'reading' ? '#F0F0F0' : book.color}"></span>
       <span class="book-meta">${escapeHtml(book.title)}<small>${escapeHtml(book.author)} · ${book.date}${book.status === 'reading' ? ' · reading' : ''}</small></span>
     </button>
   `).join('');
@@ -186,7 +186,7 @@ async function publishToGithub() {
 
   const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path.split('/').map(encodeURIComponent).join('/')}`;
   const body = {
-    message: `Update reading log (${new Date().toISOString().slice(0,10)})`,
+    message: `Update library (${new Date().toISOString().slice(0,10)})`,
     content: encodeBase64Utf8(`${JSON.stringify(sortBooks(books), null, 2)}\n`),
     branch,
     sha: currentSha

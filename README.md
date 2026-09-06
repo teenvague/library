@@ -1,4 +1,4 @@
-# Reading Log
+# Library
 
 A static, GitHub Pages-ready reading log with two public views (entry + grid) and a lightweight GitHub-backed admin page.
 
@@ -15,11 +15,11 @@ A static, GitHub Pages-ready reading log with two public views (entry + grid) an
 
 ## Publish on GitHub Pages
 
-1. Create a GitHub repository, for example `reading-log`.
+1. Create a GitHub repository, for example `library`.
 2. Upload every file/folder in this package to the repository root.
 3. In GitHub: **Settings → Pages → Build and deployment → Deploy from a branch**.
 4. Choose `main` and `/ (root)`.
-5. Your site will appear at `https://YOURUSERNAME.github.io/reading-log/`.
+5. Your site will appear at `https://YOURUSERNAME.github.io/library/`.
 
 ## Editing books directly
 
@@ -43,7 +43,7 @@ Each book looks like:
 }
 ```
 
-For a currently reading book, use `"status": "reading"` and `"rating": null`. Its permanent color is shown at 20% opacity until you mark it finished.
+For a currently reading book, use `"status": "reading"` and `"rating": null`. Its color still gets assigned and stored permanently, but while `status` is `"reading"` it displays as `#F0F0F0` instead. Once you mark it finished, its real color shows.
 
 ## Using the admin page as a GitHub backend
 
