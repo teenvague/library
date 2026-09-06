@@ -196,25 +196,45 @@ async function ensureSha(config) {
   }
 }
 
-async function publishToGithub() {
-  const config = githubConfig();
-  const { owner, repo, branch, path } = config;
-  if (!owner || !repo || !path) throw new Error('Owner, repository, and data path are required.');
+async function refreshSha(config) {
+  const response = await githubRequest(contentsUrl(config, { ref: config.branch }));
+  const payload = await response.json();
+  currentSha = payload.sha || null;
+}
 
-  await ensureSha(config);
-
+async function commitBooks(config) {
   const url = contentsUrl(config);
   const body = {
     message: `Update library (${new Date().toISOString().slice(0,10)})`,
     content: encodeBase64Utf8(`${JSON.stringify(sortBooks(books), null, 2)}\n`),
-    branch,
+    branch: config.branch,
     ...(currentSha ? { sha: currentSha } : {})
   };
-  const response = await githubRequest(url, {
+  return githubRequest(url, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
+}
+
+async function publishToGithub() {
+  const config = githubConfig();
+  const { owner, repo, path } = config;
+  if (!owner || !repo || !path) throw new Error('Owner, repository, and data path are required.');
+
+  await ensureSha(config);
+
+  let response;
+  try {
+    response = await commitBooks(config);
+  } catch (error) {
+    // Our cached sha fell behind the real file (e.g. this tab stayed open across an
+    // earlier publish elsewhere). Refresh just the sha — never the in-memory draft —
+    // and retry once instead of forcing the user to reload and lose their edit.
+    if (!/does not match/i.test(error.message)) throw error;
+    await refreshSha(config);
+    response = await commitBooks(config);
+  }
   const payload = await response.json();
   currentSha = payload.content?.sha || null;
   setStatus('Published. GitHub Pages will update after the commit is deployed.', 'ok');
