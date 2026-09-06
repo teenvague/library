@@ -20,6 +20,16 @@
     "review": []
   },
   {
+    "id": "kitchen-banana-yoshimoto-2026-09-06",
+    "title": "Kitchen",
+    "author": "Banana Yoshimoto",
+    "date": "2026-09-06",
+    "rating": null,
+    "color": "#FF4B00",
+    "status": "reading",
+    "review": []
+  },
+  {
     "id": "all-fours-sep",
     "title": "All Fours",
     "author": "Miranda July",
@@ -29,6 +39,18 @@
     "status": "finished",
     "review": [
       "The book is strongest when it makes freedom feel neither heroic nor selfish, but like an ongoing technical problem: how to construct a life capacious enough for contradiction."
+    ]
+  },
+  {
+    "id": "transcription-ben-lerner-2026-06-01",
+    "title": "Transcription",
+    "author": "Ben Lerner",
+    "date": "2026-06-01",
+    "rating": 4.5,
+    "color": "#C7DDE4",
+    "status": "finished",
+    "review": [
+      "Under construction"
     ]
   }
 ]
