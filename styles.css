@@ -113,9 +113,9 @@ button { font: inherit; }
 }
 .entry-icon, .grid-icon { width: 39px; height: 41px; display: flex; }
 .entry-icon { flex-direction: column; justify-content: space-between; }
-.entry-icon i { display: block; width: 39px; height: 11px; background: var(--inactive); }
+.entry-icon i { display: block; width: 39px; height: 9px; background: var(--inactive); }
 .grid-icon { justify-content: space-between; }
-.grid-icon i { display: block; width: 10px; height: 41px; background: var(--inactive); }
+.grid-icon i { display: block; width: 9px; height: 41px; background: var(--inactive); }
 .toggle-button.active .entry-icon i,
 .toggle-button.active .grid-icon i { background: var(--ink); }
 
